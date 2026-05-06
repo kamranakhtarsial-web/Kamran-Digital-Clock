@@ -3,26 +3,32 @@ const alarmAudio = new Audio('https://www.soundjay.com/buttons/beep-01a.mp3');
 
 function updateClock() {
     const now = new Date();
-    let hours = now.getHours();
-    const minutes = now.getMinutes().toString().padStart(2, "0");
-    const seconds = now.getSeconds().toString().padStart(2, "0");
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    const displayHours = (hours % 12 || 12).toString().padStart(2, "0");
+    let h = now.getHours();
+    let m = now.getMinutes();
+    let s = now.getSeconds();
+    let ampm = h >= 12 ? "PM" : "AM";
 
-    document.getElementById("hours").textContent = displayHours;
-    document.getElementById("minutes").textContent = minutes;
-    document.getElementById("seconds").textContent = seconds;
-    document.getElementById("ampm").textContent = ampm;
+    const minutes = m < 10 ? "0" + m : m;
+    const current24Time = `${now.getHours().toString().padStart(2, "0")}:${minutes}`;
+
+    h = h % 12 || 12;
+    h = h < 10 ? "0" + h : h;
+    s = s < 10 ? "0" + s : s;
+
+    document.getElementById("hours").innerText = h;
+    document.getElementById("minutes").innerText = minutes;
+    document.getElementById("seconds").innerText = s;
+    document.getElementById("ampm").innerText = ampm;
 
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    document.getElementById("date-display").textContent = now.toLocaleDateString('en-US', options);
+    if (document.getElementById("date-display")) {
+        document.getElementById("date-display").textContent = now.toLocaleDateString('en-US', options);
+    }
 
-    if (alarmTime) {
-        const current24Time = `${now.getHours().toString().padStart(2, "0")}:${minutes}`;
-        if (current24Time === alarmTime) {
-            alarmAudio.play().catch(e => console.log("Click on page to enable sound"));
-            document.getElementById('alarmStatus').textContent = "⏰ Time's Up!";
-        }
+    if (alarmTime && current24Time === alarmTime) {
+        alarmAudio.play().catch(e => console.log("Click on page to enable sound"));
+        document.getElementById('alarmStatus').textContent = "⏰ Time's Up!";
+        document.getElementById("alarm-popup").style.display = "flex";
     }
 }
 
@@ -36,6 +42,14 @@ document.getElementById('setAlarmBtn').addEventListener('click', () => {
     }
 });
 
+function stopAlarm() {
+    document.getElementById('alarm-popup').style.display = 'none';
+    alarmTime = null;
+    document.getElementById('alarmStatus').textContent = "No Alarm Set";
+    alarmAudio.pause();
+    alarmAudio.currentTime = 0;
+}
+
 const themeToggle = document.getElementById('theme-toggle');
 themeToggle.addEventListener('click', () => {
     document.body.classList.toggle('light-mode');
@@ -47,4 +61,3 @@ themeToggle.addEventListener('click', () => {
 });
 
 setInterval(updateClock, 1000);
-updateClock();
