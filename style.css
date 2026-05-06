@@ -1,0 +1,136 @@
+:root {
+    --bg-gradient: linear-gradient(-45deg, #2e0249, #570a57, #a91079, #2e0249);
+    --text-color: white;
+    --container-bg: rgba(255, 255, 255, 0.05);
+    --box-shadow: rgba(0, 0, 0, 0.4);
+}
+
+.light-mode {
+    --bg-gradient: linear-gradient(-45deg, #f3f4f7, #ffffff, #dbe2ef, #f3f4f7);
+    --text-color: #2e0249;
+    --container-bg: rgba(0, 0, 0, 0.05);
+    --box-shadow: rgba(0, 0, 0, 0.1);
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-color);
+    overflow: hidden;
+    background: var(--bg-gradient);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    transition: all 0.5s ease;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+#theme-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--container-bg);
+    color: var(--text-color);
+    border: 1px solid var(--text-color);
+    padding: 10px 15px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.user-name {
+    font-size: 45px;
+    font-weight: 600;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    background: linear-gradient(to right, #ff79da, #2e0249);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 10px 20px var(--box-shadow);
+}
+
+.clock-container {
+    background: var(--container-bg);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 30px 50px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px var(--box-shadow);
+}
+
+.time-box span {
+    font-size: 70px;
+    font-weight: 600;
+    display: block;
+}
+
+.time-box p {
+    font-size: 10px;
+    letter-spacing: 2px;
+    opacity: 0.7;
+    margin: 0;
+}
+
+.ampm-box span {
+    font-size: 25px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.colon {
+    font-size: 50px;
+    margin-bottom: 20px;
+}
+
+#date-display {
+    margin-top: 20px;
+    font-size: 20px;
+    letter-spacing: 2px;
+    background: var(--container-bg);
+    padding: 8px 25px;
+    border-radius: 50px;
+}
+
+.alarm-section {
+    margin-top: 25px;
+    background: var(--container-bg);
+    padding: 15px 25px;
+    border-radius: 15px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+input[type="time"] {
+    background: rgba(128, 128, 128, 0.2);
+    border: none;
+    padding: 8px;
+    color: var(--text-color);
+    border-radius: 5px;
+    outline: none;
+}
+
+#setAlarmBtn {
+    background: #a91079;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    margin-left: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
